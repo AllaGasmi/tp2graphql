@@ -1,7 +1,7 @@
-import { pubSub } from "./pubSub";
+import { pubSub, CvChangedPayload } from "./pubSub";
 export const Subscription = {
   cvChanged: {
     subscribe: () => pubSub.subscribe("CV_CHANGED"),
-    resolve: (payload: any) => payload.cvChanged,
+    resolve: (payload: { cvChanged: CvChangedPayload }) => payload.cvChanged,
   },
-} as any;   
+} as any;

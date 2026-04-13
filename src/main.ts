@@ -1,13 +1,14 @@
 import { createSchema, createYoga } from "graphql-yoga";
 import { createServer } from "http";
+import fs from "fs";
+import path from "path";
 import { DB } from "./db/db";
 import { Query } from "./Query";
 import { Cv } from "./Cv";
+import { Mutation } from "./Mutation";
+import { Subscription } from "./Subscription";
 
-const fs = require("fs");
-const path = require("path");
-
-type MyContext = {
+export type MyContext = {
   DB: typeof DB;
 };
 
@@ -16,11 +17,12 @@ export const schema = createSchema<MyContext>({
     path.join(__dirname, "./../schema/schema.graphql"),
     "utf-8",
   ),
-    resolvers: {
-        Query,
-        Cv
-  }
-  ,
+  resolvers: {
+    Query,
+    Cv,
+    Mutation,
+    Subscription,
+  },
 });
 
 function main() {
