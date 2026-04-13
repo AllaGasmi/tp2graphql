@@ -1,0 +1,63 @@
+type Cv {
+  id: ID!
+  name: String!
+  age: Int!
+  job: String
+  skills: [Skill]
+  cvOwner: User
+}
+type Skill {
+  id: ID!
+  designation: String!
+  cvs: [Cv]
+}
+enum Role {
+  ADMIN
+  USER
+}
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: Role!
+  cvs: [Cv]
+}
+type Query {
+  getAllCvs: [Cv]
+  getCvById(id: ID!): Cv
+}
+input CreateCvInput {
+  name: String!
+  age: Int!
+  job: String
+  skillIds: [ID]
+  cvOwnerId: ID
+}
+input UpdateCvInput {
+  name: String!
+  age: Int!
+  job: String
+  skillIds: [ID]
+  cvOwnerId: ID
+}
+
+type Mutation {
+  addCv(input: CreateCvInput!): Cv
+  updateCv(id: ID!, input: UpdateCvInput): Cv
+  deleteCv(id: ID!): String
+}
+
+type Subscription {
+  cvChanged: CvEvent
+}
+
+type CvEvent {
+  type: EventType!
+  cv: Cv
+}
+
+enum EventType {
+  ADDED
+  UPDATED
+  DELETED
+}
